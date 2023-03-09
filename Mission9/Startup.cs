@@ -32,11 +32,18 @@ namespace Mission9
 
             services.AddDbContext<BookstoreContext>(options =>
            {
+               //using the database
                options.UseSqlite(Configuration["ConnectionStrings:BookStoreDBConnection"]);
 
            });
 
             services.AddScoped<IBookstoreRepository, efBookstoreRepository>();
+
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,12 +55,35 @@ namespace Mission9
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
-            {
+            {   
+                // makes it so it will show the books and the page buttons correctly depending on how many books are on each specific category or if they didn't select a category it shows all the books
+
+                endpoints.MapControllerRoute(
+                    name: "categoryPage",
+                    pattern: "{bookCategory}/Page{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "Paging",
+                    pattern: "{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index", pageNum=1 });
+
+                endpoints.MapControllerRoute(
+                    name: "category",
+                    pattern: "{bookCategory}",
+                    defaults: new { Controller = "Home", action = "Index", pageNum = 1 });
+
+
+
+
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
+
             });
         }
     }

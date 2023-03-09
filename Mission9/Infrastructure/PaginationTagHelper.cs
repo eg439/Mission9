@@ -36,7 +36,7 @@ namespace Mission9.Infrastructure
             IUrlHelper uh = uhf.GetUrlHelper(vc);
 
             TagBuilder final = new TagBuilder("div");
-
+            // helps to make sure it shows all the pages
             for (int i = 1; i <=  PageBlah.TotalPages; i++)
             {
                 TagBuilder tb = new TagBuilder("a");

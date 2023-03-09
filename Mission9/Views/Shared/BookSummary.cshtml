@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Books
+
+
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <!-- Bolded the title-->
+        <h2 style="font-weight:bold">@Model.Title</h2>
+        <h4>
+            <!-- Made the Price Pill bigger and darker so it's not like 2 pixels big-->
+            <span class="badge badge-pill badge-primary float-right" style="background-color: black; text-size-adjust:auto">
+                Price: $@Model.Price
+            </span>
+
+        </h4>
+    </div>
+    <ul>
+        <li>Author: @Model.Author</li>
+        <li>Category: @Model.Category</li>
+        <li>Classification: @Model.Classification</li>
+        <li>PageCount: @Model.PageCount</li>
+        <li>Publisher: @Model.Publisher</li>
+        <li>Isbn: @Model.Isbn</li>
+    </ul>
+
+    <form method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="@Model.BookId" />
+        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+        <span class="card-text">
+            <!-- Made it so the add to cart text wasn't super small-->
+            <button type="submit" class="btn btn-success btn-md float-end" style="text-size-adjust:auto">Add to Cart</button>
+        </span>
+    </form>
+</div>
+
+
