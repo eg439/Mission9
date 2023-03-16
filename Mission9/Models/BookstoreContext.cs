@@ -20,6 +20,7 @@ namespace Mission9.Models
         }
 
         public  DbSet<Books> Books { get; set; }
+        public DbSet<FinalCart> Carts { get; set; }
 
     }
 }
